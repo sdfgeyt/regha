@@ -38,9 +38,9 @@ on:
         required: false
 
 jobs:
-  runs-on: ubuntu-latest
-
   compliance:
+    runs-on: ubuntu-latest
+
     timeout-minutes: 15
     permissions:
       security-events: write
@@ -67,3 +67,4 @@ jobs:
             echo "Docker image filename: ${{ inputs.docker-image-filename }}"
             sleep 10
             echo "sdsdfsdfsdfsdfsdf"
+
