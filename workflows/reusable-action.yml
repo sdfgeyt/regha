@@ -1,0 +1,69 @@
+name: Check compliance pre-merge
+
+on:
+  workflow_call:
+    inputs:
+      component-name:
+        description: ''
+        required: true
+        type: string
+      image-packaging:
+        description: 'tar or zip (default)'
+        required: false
+        type: string
+        default: 'zip'
+      java-version:
+        description: "Provide java version to be setup for compiling"
+        required: false
+        type: string
+        default: '11'
+      docker-image-filename:
+        description: "Provide the name of the docker image file"
+        required: false
+        type: string
+      runs-on:
+        description: "The name of the runner group to use for this job"
+        required: false
+        type: string
+        default: '"group:Cumulocity-Compliance"'
+
+    secrets:
+      C8Y_TPSAFE_API_KEY:
+        required: false
+      C8Y_TPSAFE_RULES_APP_PRIVATE_KEY:
+        required: false
+      C8Y_MVN_PUBLIC_USERNAME:
+        required: false
+      C8Y_MVN_PUBLIC_PASSWORD:
+        required: false
+
+jobs:
+  runs-on: ubuntu-latest
+
+  compliance:
+    timeout-minutes: 15
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Maven build
+        run: |
+          echo "Maven build started"
+          echo "Component name: ${{ inputs.component-name }}"
+          echo "Java version: ${{ inputs.java-version }}"
+          sleep 10
+
+      - name: Extract docker image path
+        id: find-image-tar
+        run: |
+            echo "Extracting docker image path"
+            echo "Component name: ${{ inputs.component-name }}"
+            echo "Image packaging: ${{ inputs.image-packaging }}"
+            echo "Docker image filename: ${{ inputs.docker-image-filename }}"
+            sleep 10
+            echo "::set-output name=image-path::/path/to/docker/image"
