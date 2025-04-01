@@ -66,4 +66,4 @@ jobs:
             echo "Image packaging: ${{ inputs.image-packaging }}"
             echo "Docker image filename: ${{ inputs.docker-image-filename }}"
             sleep 10
-            echo "::set-output name=image-path::/path/to/docker/image"
+            echo "sdsdfsdfsdfsdfsdf"
